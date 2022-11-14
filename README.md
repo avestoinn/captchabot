@@ -3,7 +3,6 @@ A Telegram bot that can distinguish robots from humans via simple captcha check 
 image
 
 ## Installation
-<hr>
 Create a `config.json` in a project's root with the params shown below:
 
 ```json5
@@ -19,9 +18,7 @@ Create a `config.json` in a project's root with the params shown below:
 ```
 
 ## Group admin commands
-<hr>
 This part is on development and will be published as soon as possible.
 
 ## Example (Demo)
-<hr>
 You can check a demo version of this bot: <a href="https://captcha_superbot.t.me">@captcha_superbot</a>
