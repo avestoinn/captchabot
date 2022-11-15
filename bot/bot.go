@@ -31,6 +31,13 @@ func Run() {
 		return nil
 	})
 
+	admin := Bot.Group()
+	admin.Use(ChatAdminOnlyMiddleware)
+	admin.Handle("/welcome_text", SetWelcomeText)
+	admin.Handle("/verify_seconds", SetVerifySeconds)
+	admin.Handle("/options_count", SetOptionsCount)
+	admin.Handle("/words_per_phrase", SetWordsPerPhrase)
+
 	// Pre-release support
 	// TODO: Добавить поддержку этих команд. На данный момент бот эти команды не поддерживает
 	if err = Bot.SetCommands([]tele.Command{

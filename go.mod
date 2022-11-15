@@ -7,6 +7,7 @@ require (
 	github.com/disintegration/imaging v1.6.2
 	github.com/tjarratt/babble v0.0.0-20210505082055-cbca2a4833c1
 	golang.org/x/image v0.1.0
+	golang.org/x/net v0.2.0
 	golang.org/x/text v0.4.0
 	gopkg.in/telebot.v3 v3.1.2
 	gorm.io/driver/sqlite v1.4.3

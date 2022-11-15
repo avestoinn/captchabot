@@ -2,6 +2,7 @@ package bot
 
 import (
 	"fmt"
+	"github.com/avestoinn/captchabot/messages"
 	"github.com/avestoinn/captchabot/models"
 	"github.com/avestoinn/captchabot/service"
 	tele "gopkg.in/telebot.v3"
@@ -31,5 +32,26 @@ func GroupMessageOnlyMiddleware(f tele.HandlerFunc) tele.HandlerFunc {
 			return f(c)
 		}
 		return nil
+	}
+}
+
+func ChatAdminOnlyMiddleware(f tele.HandlerFunc) tele.HandlerFunc {
+	return func(c tele.Context) error {
+		sender := c.Sender()
+		p := messages.NewPrinter(sender.LanguageCode)
+
+		// Getting chat admins
+		adminMembers, err := c.Bot().AdminsOf(c.Chat())
+		if err != nil {
+			return err
+		}
+
+		// Returns handler func only if sender is a chat admin
+		for _, admin := range adminMembers {
+			if sender.ID == admin.User.ID {
+				return f(c)
+			}
+		}
+		return c.Send(p.Sprintf(messages.NotEnoughChatRights))
 	}
 }

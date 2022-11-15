@@ -2,6 +2,7 @@ package bot
 
 import (
 	"fmt"
+	"github.com/avestoinn/captchabot/messages"
 	"github.com/avestoinn/captchabot/models"
 	"github.com/avestoinn/captchabot/service"
 	tele "gopkg.in/telebot.v3"
@@ -32,7 +33,7 @@ func SendCaptcha(c tele.Context) error {
 	}
 
 	// Getting a new captcha
-	captcha := service.NewCaptcha(5, 3)
+	captcha := service.NewCaptcha(chat.OptionsCount, chat.PhraseWordsCount)
 	i := &tele.Photo{File: tele.FromReader(captcha.Image), Caption: chat.WelcomeText + "\n\n" +
 		getUserMention(c.Sender().ID, c.Sender().FirstName)}
 
@@ -74,6 +75,8 @@ func SendCaptcha(c tele.Context) error {
 }
 
 func OnCaptchaClicked(c tele.Context) error {
+	p := messages.NewPrinter(c.Sender().LanguageCode)
+
 	data := strings.Split(c.Data(), "|")
 	dsnUserId, _ := strconv.ParseInt(data[0], 10, 64)
 	optionName := data[1]
@@ -97,7 +100,7 @@ func OnCaptchaClicked(c tele.Context) error {
 		log.Println("Cannot promote chat member. Error: ", err.Error())
 	}
 
-	_ = c.Respond(&tele.CallbackResponse{Text: models.GetPassedMessage(c.Sender().LanguageCode),
+	_ = c.Respond(&tele.CallbackResponse{Text: p.Sprintf(messages.CaptchaSuccess),
 		ShowAlert: true})
 
 	if err = c.Bot().Delete(c.Message()); err != nil {

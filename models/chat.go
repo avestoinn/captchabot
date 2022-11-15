@@ -24,15 +24,6 @@ const (
 		"To do this, select the phrase shown in the picture"
 )
 
-func GetPassedMessage(languageCode string) string {
-	switch languageCode {
-	case "ru":
-		return "Ты прошел проверку! Молодец, человек!"
-	default:
-		return "You've passed the captcha. Good job!"
-	}
-}
-
 func NewChat(chatId string, phraseWordCount int, optionsCount int, langCode string) *Chat {
 	var welcomeMsg string
 	switch langCode {
